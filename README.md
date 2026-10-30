@@ -24,5 +24,3 @@
 - session เปลี่ยน id หลัง login (`session_regenerate_id`), cookie เป็น HttpOnly และ SameSite=Strict
 - POST ทุกคำขอต้องมี CSRF token ใน header `X-CSRF-Token`
 - จำกัดการ login ผิดซ้ำด้วยตาราง `login_attempts`
-
-หมายเหตุ: ทดสอบด้วย `server/test_auth.py` ไม่ได้ เพราะเป็นเทสต์ของเวอร์ชัน Python ยังไม่มีเทสต์ของเวอร์ชันนี้ และยังไม่ได้รันบน PHP จริง
