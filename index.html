@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ห้องรวมบอร์ดเกม</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pridi:wght@500;700&family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+  <main class="app">
+    <section id="gate" class="gate" hidden>
+      <div class="brand"><span class="die" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 22 22"><rect x="1" y="1" width="20" height="20" rx="4" fill="#1c4a3c"/><circle cx="6.5" cy="6.5" r="2" fill="#fbf5e6"/><circle cx="15.5" cy="15.5" r="2" fill="#fbf5e6"/><circle cx="11" cy="11" r="2" fill="#f2b134"/></svg>
+      </span>ห้องรวมบอร์ดเกม</div>
+
+      <div class="gate-hero">
+        <h1>มานั่ง<em>โต๊ะ</em>เดียวกัน</h1>
+        <p>สมัครฟรี แล้วเลือกได้ 11 เกม สู้บอทคนเดียว หรือชวนเพื่อนมาเล่นบนเครื่องเดียวกัน</p>
+      </div>
+
+      <div class="gate-grid">
+        <article class="gbox gate-main">
+          <div class="lid" aria-hidden="true">
+            <svg width="220" height="110" viewBox="0 0 220 110">
+              <rect x="18" y="22" width="56" height="74" rx="8" fill="#fbf5e6" transform="rotate(-10 46 59)"/>
+              <rect x="52" y="16" width="56" height="74" rx="8" fill="#f2b134" transform="rotate(6 80 53)"/>
+              <path d="M68 40l8 8M76 40l-8 8" stroke="#1f1a12" stroke-width="4" stroke-linecap="round"/>
+              <rect x="126" y="30" width="44" height="44" rx="9" fill="#fbf5e6"/>
+              <circle cx="138" cy="42" r="4.5" fill="#1f1a12"/><circle cx="158" cy="62" r="4.5" fill="#1f1a12"/><circle cx="148" cy="52" r="4.5" fill="#d6453d"/>
+              <path d="M192 26l-7 9h14zM184 37h16l4 34h-24zM178 74h28v7h-28z" fill="#fbf5e6"/>
+            </svg>
+          </div>
+          <div class="gate-info">
+            <h2>เข้าร่วมห้องเกม</h2>
+            <p id="gate-text">ประวัติการเล่นของคุณจะถูกเก็บไว้ทุกครั้งที่เล่นจบ กลับมาดูได้ทุกเมื่อ</p>
+            <span class="gate-count"><i style="background:#2bb3c0"></i><i style="background:#2e86de"></i><i style="background:#8e5ad7"></i><i style="background:#d6453d"></i><i style="background:#f08a4b"></i>&nbsp;11 เกมรออยู่</span>
+            <div id="gate-actions" class="gate-actions">
+              <button id="gate-register" class="pill pill-gold" type="button">สมัครสมาชิก</button>
+              <button id="gate-login" class="pill pill-line" type="button">เข้าสู่ระบบ</button>
+            </div>
+          </div>
+        </article>
+
+        <ul class="gate-shelf" aria-hidden="true">
+          <li><div class="lid" style="--c:#2bb3c0"><svg viewBox="0 0 66 66"><path d="M12 12l16 16M28 12L12 28M38 38l16 16M54 38L38 54" stroke="#fbf5e6" stroke-width="5" stroke-linecap="round"/><circle cx="46" cy="20" r="9" fill="none" stroke="#fbf5e6" stroke-width="5"/></svg></div></li>
+          <li><div class="lid" style="--c:#2e86de"><svg viewBox="0 0 66 66"><rect x="6" y="14" width="54" height="40" rx="6" fill="#fbf5e6"/><circle cx="16" cy="25" r="5" fill="#d6453d"/><circle cx="28" cy="25" r="5" fill="#f2b134"/><circle cx="40" cy="25" r="5" fill="#d6453d"/><circle cx="52" cy="25" r="5" fill="#f2b134"/></svg></div></li>
+          <li><div class="lid" style="--c:#2a8f6a"><svg viewBox="0 0 66 66"><rect x="6" y="6" width="54" height="54" rx="4" fill="#1c4a3c"/><circle cx="24" cy="33" r="11" fill="#fbf5e6"/><circle cx="42" cy="33" r="11" fill="#1f1a12"/></svg></div></li>
+          <li><div class="lid" style="--c:#8e5ad7"><svg viewBox="0 0 66 66"><rect x="10" y="8" width="30" height="42" rx="5" fill="#fbf5e6" transform="rotate(-10 25 29)"/><rect x="26" y="14" width="30" height="42" rx="5" fill="#f2b134" transform="rotate(8 41 35)"/><path d="M36 33l3 3 6-7" stroke="#8e5ad7" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div></li>
+          <li><div class="lid" style="--c:#e0488b"><svg viewBox="0 0 66 66"><path d="M10 56h10V44h10V32h10V20h10V8h16" stroke="#fbf5e6" stroke-width="6" fill="none" stroke-linejoin="round"/><path d="M22 14c8 0 4 10-2 14" stroke="#fbf5e6" stroke-width="4" fill="none" stroke-linecap="round"/></svg></div></li>
+          <li><div class="lid" style="--c:#8b5e3c"><svg viewBox="0 0 66 66"><path d="M33 8l-8 10h16zM24 20h18l4 26H20zM16 50h34v6H16z" fill="#fbf5e6"/></svg></div></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="lobby" hidden>
+      <header class="lobby-head">
+        <div class="lobby-top">
+          <h1>ห้องรวมบอร์ดเกม</h1>
+          <div id="account" class="account" hidden>
+            <span id="account-name"></span>
+            <button id="account-btn" class="btn">ออกจากระบบ</button>
+          </div>
+        </div>
+        <p>เลือกเกมที่อยากเล่น จะสู้กับบอทหรือชวนเพื่อนมาเล่นในเครื่องเดียวกันก็ได้</p>
+      </header>
+      <div id="cards" class="cards"></div>
+      <section class="history" aria-labelledby="history-title">
+        <h2 id="history-title">ประวัติการเล่น</h2>
+        <ol id="history-list" class="history-list"></ol>
+      </section>
+    </section>
+
+    <section id="game" hidden>
+      <div class="game-bar">
+        <button id="back" class="btn">← กลับ</button>
+        <h2 id="game-title"></h2>
+        <div class="seg" role="group" aria-label="โหมดการเล่น">
+          <button id="mode-bot" class="seg-btn">เล่นกับบอท</button>
+          <button id="mode-pvp" class="seg-btn">เล่น 2 คน</button>
+        </div>
+        <button id="restart" class="btn btn-primary">เริ่มใหม่</button>
+      </div>
+      <p id="status" class="status" aria-live="polite"></p>
+      <div id="stage" class="stage"></div>
+      <details class="rules-box">
+        <summary>วิธีเล่น</summary>
+        <p id="rules" class="rules"></p>
+      </details>
+    </section>
+  </main>
+
+  <dialog id="auth" aria-labelledby="auth-title">
+    <div class="gbox">
+    <div class="lid" aria-hidden="true">
+      <svg width="46" height="46" viewBox="0 0 22 22"><rect x="1" y="1" width="20" height="20" rx="4" fill="#fbf5e6"/><circle cx="6.5" cy="6.5" r="2" fill="#1f1a12"/><circle cx="15.5" cy="15.5" r="2" fill="#1f1a12"/><circle cx="11" cy="11" r="2" fill="#d6453d"/></svg>
+    </div>
+    <form id="auth-form" class="auth-body" novalidate>
+      <h2 id="auth-title">เข้าสู่ระบบ</h2>
+      <div class="tabs" role="group" aria-label="เลือกการทำรายการ">
+        <button type="button" id="auth-tab-login" class="tab" aria-pressed="true">เข้าสู่ระบบ</button>
+        <button type="button" id="auth-tab-register" class="tab" aria-pressed="false">สมัครสมาชิก</button>
+      </div>
+      <div id="auth-user-field" hidden>
+        <label for="auth-user">ชื่อผู้ใช้</label>
+        <input id="auth-user" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="20">
+        <p id="auth-hint" class="auth-hint" hidden>ใช้ a-z ตัวเลข และ _ ความยาว 3-20 ตัวอักษร</p>
+      </div>
+      <label for="auth-email">อีเมล</label>
+      <input id="auth-email" name="email" type="email" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="190" required>
+      <label for="auth-pass">รหัสผ่าน</label>
+      <input id="auth-pass" name="password" type="password" autocomplete="current-password" maxlength="128" required>
+      <p id="auth-pass-hint" class="auth-hint" hidden>รหัสผ่านต้องยาว 10 ตัวอักษรขึ้นไป</p>
+      <p id="auth-error" class="auth-error" role="alert"></p>
+      <div class="auth-actions">
+        <button type="button" id="auth-cancel" class="pill pill-line">ยกเลิก</button>
+        <button type="submit" id="auth-submit" class="pill pill-gold">เข้าสู่ระบบ</button>
+      </div>
+    </form>
+    </div>
+  </dialog>
+
+  <!-- โค้ดเกมและ main.js เซิร์ฟเวอร์ส่งให้เฉพาะคนที่ล็อกอินแล้ว auth.js จะโหลดต่อหลังเข้าสู่ระบบ -->
+  <script src="registry.js"></script>
+  <script src="sfx.js?v=2"></script>
+  <script src="fx.js?v=2"></script>
+  <script src="auth.js"></script>
+</body>
+</html>
