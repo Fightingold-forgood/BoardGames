@@ -2,6 +2,7 @@ Games.push({
   id: 'memory',
   name: 'จับคู่ไพ่',
   emoji: '🃏',
+  levels: true,
   desc: 'เปิดไพ่หาคู่ที่เหมือนกัน ใครได้มากกว่าชนะ',
   rules: 'ผลัดกันเปิดไพ่ทีละ 2 ใบ ถ้าเหมือนกันจะได้คู่นั้นและได้เล่นต่อ ถ้าไม่เหมือนไพ่จะคว่ำลงแล้วเปลี่ยนตา จำตำแหน่งไพ่ให้ดี บอทเองก็จำได้แต่บางครั้งก็ลืม',
   create(root, ctx) {
@@ -14,6 +15,7 @@ Games.push({
     }
     const matched = Array(16).fill(false);
     const known = new Map();   // ไพ่ที่บอทจำได้
+    const RECALL = { easy: 0.35, normal: 0.8, hard: 1 }[ctx.level] ?? 0.8;
     const score = { 1: 0, 2: 0 };
     let open = [], turn = 1, lock = false, over = false, alive = true;
 
@@ -43,7 +45,7 @@ Games.push({
       els[i].textContent = cards[i];
       els[i].classList.add('open');
       open.push(i);
-      if (Math.random() < 0.8) known.set(i, cards[i]);
+      if (Math.random() < RECALL) known.set(i, cards[i]);
       if (open.length < 2) return;
 
       lock = true;

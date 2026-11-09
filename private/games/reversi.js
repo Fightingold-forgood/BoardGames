@@ -2,6 +2,7 @@ Games.push({
   id: 'reversi',
   name: 'Reversi',
   emoji: '⚫',
+  levels: true,
   desc: 'วางหมากล้อมแล้วพลิกสีฝั่งตรงข้าม',
   rules: 'วางหมากให้ล้อมหมากฝั่งตรงข้ามไว้ระหว่างหมากของเรา หมากที่ถูกล้อมจะพลิกเป็นสีเรา จุดเล็กๆ คือช่องที่วางได้ ถ้าไม่มีช่องวางจะข้ามตาอัตโนมัติ จบเกมเมื่อวางต่อไม่ได้ทั้งคู่ ใครมีหมากมากกว่าชนะ',
   create(root, ctx) {
@@ -119,11 +120,37 @@ Games.push({
         const m = moves(2);
         let best = m[0], bs = -Infinity;
         for (const x of m) {
-          const s = W[x.r][x.c] * 3 + x.f.length + Math.random();
+          const s = ctx.level === 'easy' ? Math.random()
+            : ctx.level === 'hard' ? tryMove(x, 2, () => search(2, 1)) + Math.random()
+            : W[x.r][x.c] * 3 + x.f.length + Math.random();
           if (s > bs) { bs = s; best = x; }
         }
         place(best.r, best.c, 2);
       }, 600);
+    }
+
+    // ระดับยาก: วางลองบนกระดานจริงแล้วคืนค่าเดิม (คะแนนจากมุมมองบอท = ตาราง W + จำนวนตาที่เดินได้)
+    function tryMove(x, p, fn) {
+      b[x.r][x.c] = p;
+      x.f.forEach(([fr, fc]) => { b[fr][fc] = p; });
+      const v = fn();
+      b[x.r][x.c] = 0;
+      x.f.forEach(([fr, fc]) => { b[fr][fc] = 3 - p; });
+      return v;
+    }
+    function evalB() {
+      let s = 0;
+      for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
+        if (b[r][c] === 2) s += W[r][c]; else if (b[r][c] === 1) s -= W[r][c];
+      }
+      return s + 4 * (moves(2).length - moves(1).length);
+    }
+    function search(depth, p) {
+      if (depth === 0) return evalB();
+      const ms = moves(p);
+      if (!ms.length) return moves(3 - p).length ? search(depth - 1, 3 - p) : (count(2) - count(1)) * 1000;
+      const vals = ms.map((x) => tryMove(x, p, () => search(depth - 1, 3 - p)));
+      return p === 2 ? Math.max(...vals) : Math.min(...vals);
     }
 
     function human(r, c) {

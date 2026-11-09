@@ -2,6 +2,7 @@ Games.push({
   id: 'uno',
   name: 'UNO',
   emoji: '🎴',
+  levels: true,
   desc: 'ลงไพ่ให้หมดมือก่อน สู้บอท 3 ตัว หรือเล่น 2 คน',
   rules: 'แจกไพ่คนละ 7 ใบ ลงไพ่ที่สีหรือเลข/สัญลักษณ์ตรงกับไพ่บนกอง ลงไม่ได้ให้กดกองจั่ว (ถ้าจั่วได้ไพ่ที่ลงได้ จะลงทันทีหรือกด "ผ่าน" ก็ได้) ⊘ ข้ามคนถัดไป ⇄ กลับทิศ +2 คนถัดไปจั่ว 2 ใบและโดนข้าม ★ เลือกสีใหม่ +4 เลือกสีใหม่ คนถัดไปจั่ว 4 ใบและโดนข้าม (ลงได้ทุกเมื่อ) ใครไพ่หมดมือก่อนชนะ โหมดเล่น 2 คนจะซ่อนไพ่ไว้จนกว่าจะแตะ ส่งเครื่องให้อีกฝ่ายทุกครั้งที่ถึงตา',
   create(root, ctx) {
@@ -232,6 +233,7 @@ Games.push({
     }
 
     function choose(opts, h) {
+      if (ctx.level === 'easy') return opts[rnd(opts.length)];
       const cnt = { R: 0, Y: 0, G: 0, B: 0 };
       h.forEach((x) => { if (x.c !== 'W') cnt[x.c]++; });
       const nextHand = hands[nextIdx(turn)].length;
@@ -241,11 +243,13 @@ Games.push({
         if (c.c === 'W') s -= h.length <= 2 ? 0 : 6;
         else if ('SVD'.includes(c.v)) s += nextHand <= 3 ? 6 : 2;
         else s += cnt[c.c] * 0.5 + Number(c.v) * 0.1;
+        if (ctx.level === 'hard' && (c.v === 'D' || c.v === 'F') && nextHand <= 2) s += 10;   // กดคนที่ใกล้หมดมือ
         if (s > bs) { bs = s; best = c; }
       }
       return best;
     }
     function botColor(h) {
+      if (ctx.level === 'easy') return COLS[rnd(4)];
       const cnt = { R: 0, Y: 0, G: 0, B: 0 };
       h.forEach((x) => { if (x.c !== 'W') cnt[x.c]++; });
       const max = Math.max(...COLS.map((c) => cnt[c]));

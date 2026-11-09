@@ -5,7 +5,10 @@
   let destroy = null;   // ฟังก์ชันเก็บกวาดของเกมที่เปิดอยู่
   let mode = 'bot';
   let reported = false;   // กันการบันทึกซ้ำในรอบเดียวกัน
-  try { mode = localStorage.getItem('bg-mode') || 'bot'; } catch (e) {}
+  let level = 'normal';   // ระดับความยากของบอท: easy | normal | hard
+  try { mode = localStorage.getItem('bg-mode') || 'bot'; level = localStorage.getItem('bg-level') || 'normal'; } catch (e) {}
+  const LEVELS = ['easy', 'normal', 'hard'];
+  if (!LEVELS.includes(level)) level = 'normal';
 
   // สีประจำเกม (เหมือนสีฝากล่อง) และจำนวนผู้เล่น
   const META = {
@@ -15,6 +18,8 @@
     memory: { color: '#8e5ad7', players: '1–2 คน' },
     snakes: { color: '#e0488b', players: '1–2 คน' },
     chess: { color: '#8b5e3c', players: '1–2 คน' },
+    gomoku: { color: '#3d5a80', players: '1–2 คน' },
+    mancala: { color: '#b5651d', players: '1–2 คน' },
     uno: { color: '#d6453d', players: '2–4 คน' },
     werewolf: { color: '#5a4fcf', players: '1 หรือ 4–8 คน' },
     blocks: { color: '#7cb518', players: '1 คน' },
@@ -31,6 +36,8 @@
     memory: '<svg viewBox="0 0 66 66"><rect x="10" y="8" width="30" height="42" rx="5" fill="#fbf5e6" transform="rotate(-10 25 29)"/><rect x="26" y="14" width="30" height="42" rx="5" fill="#f2b134" transform="rotate(8 41 35)"/><path d="M36 33l3 3 6-7" stroke="#8e5ad7" stroke-width="3" fill="none" stroke-linecap="round"/></svg>',
     snakes: '<svg viewBox="0 0 66 66"><path d="M10 56h10V44h10V32h10V20h10V8h16" stroke="#fbf5e6" stroke-width="6" fill="none" stroke-linejoin="round"/><path d="M22 14c8 0 4 10-2 14" stroke="#fbf5e6" stroke-width="4" fill="none" stroke-linecap="round"/></svg>',
     chess: '<svg viewBox="0 0 66 66"><path d="M33 8l-8 10h16zM24 20h18l4 26H20zM16 50h34v6H16z" fill="#fbf5e6"/></svg>',
+    gomoku: '<svg viewBox="0 0 66 66"><path d="M10 18h46M10 33h46M10 48h46M18 10v46M33 10v46M48 10v46" stroke="#fbf5e6" stroke-width="2.5"/><circle cx="18" cy="48" r="6" fill="#1f1a12"/><circle cx="33" cy="33" r="6" fill="#1f1a12"/><circle cx="48" cy="18" r="6" fill="#1f1a12"/><circle cx="18" cy="18" r="6" fill="#fbf5e6"/><circle cx="48" cy="48" r="6" fill="#fbf5e6"/></svg>',
+    mancala: '<svg viewBox="0 0 66 66"><rect x="4" y="16" width="58" height="34" rx="17" fill="#fbf5e6"/><circle cx="21" cy="26" r="5" fill="#b5651d"/><circle cx="33" cy="26" r="5" fill="#b5651d"/><circle cx="45" cy="26" r="5" fill="#b5651d"/><circle cx="21" cy="40" r="5" fill="#b5651d"/><circle cx="33" cy="40" r="5" fill="#b5651d"/><circle cx="45" cy="40" r="5" fill="#b5651d"/></svg>',
     uno: '<svg viewBox="0 0 66 66"><rect x="14" y="10" width="26" height="38" rx="4" fill="#fbf5e6" transform="rotate(-12 27 29)"/><rect x="26" y="14" width="26" height="38" rx="4" fill="#f2b134" transform="rotate(10 39 33)"/></svg>',
     werewolf: '<svg viewBox="0 0 66 66"><path d="M33 10l18 12v16c0 11-8 17-18 20-10-3-18-9-18-20V22z" fill="#fbf5e6"/><path d="M26 34l7-6 7 6" stroke="#5a4fcf" stroke-width="3" fill="none" stroke-linecap="round"/></svg>',
     blocks: '<svg viewBox="0 0 66 66"><rect x="8" y="34" width="22" height="22" rx="3" fill="#fbf5e6"/><rect x="30" y="34" width="22" height="22" rx="3" fill="#fbf5e6"/><rect x="19" y="12" width="22" height="22" rx="3" fill="#f2b134"/></svg>',
@@ -89,6 +96,7 @@
     reported = false;
     destroy = current.create(stage, {
       mode,
+      level,
       status: (t) => {
         statusEl.textContent = t;
         FX.restart(statusEl, 'fx-pop');
@@ -160,6 +168,9 @@
   function syncMode() {
     $('mode-bot').setAttribute('aria-pressed', mode === 'bot');
     $('mode-pvp').setAttribute('aria-pressed', mode === 'pvp');
+    LEVELS.forEach((l) => $('level-' + l).setAttribute('aria-pressed', level === l));
+    // ปุ่มระดับโชว์เฉพาะเกมที่บอทปรับระดับได้ และกำลังเล่นกับบอท
+    $('level-easy').parentElement.hidden = !(current && current.levels && mode === 'bot');
   }
 
   function setMode(m) {
@@ -173,5 +184,11 @@
   $('restart').addEventListener('click', start);
   $('mode-bot').addEventListener('click', () => setMode('bot'));
   $('mode-pvp').addEventListener('click', () => setMode('pvp'));
+  LEVELS.forEach((l) => $('level-' + l).addEventListener('click', () => {
+    level = l;
+    try { localStorage.setItem('bg-level', l); } catch (e) {}
+    syncMode();
+    start();
+  }));
   loadHistory();
 })();

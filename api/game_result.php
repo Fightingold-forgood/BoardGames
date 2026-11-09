@@ -12,7 +12,7 @@ $game = text_field($body, 'game', 20);
 $mode = text_field($body, 'mode', 10);
 $outcome = text_field($body, 'outcome', 10);
 
-const GAMES = ['ttt', 'c4', 'reversi', 'memory', 'snakes', 'chess', 'uno', 'werewolf', 'blocks', 'candy'];
+const GAMES = ['ttt', 'c4', 'reversi', 'memory', 'snakes', 'chess', 'gomoku', 'mancala', 'uno', 'werewolf', 'blocks', 'candy'];
 const SOLO_GAMES = ['blocks', 'candy'];
 const MODES = ['bot', 'pvp', 'solo'];
 const OUTCOMES = ['win', 'lose', 'draw', 'finished'];

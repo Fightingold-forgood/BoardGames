@@ -2,6 +2,7 @@ Games.push({
   id: 'chess',
   name: 'หมากรุกสากล',
   emoji: '♞',
+  levels: true,
   desc: 'หมากรุกสากล (Chess) สู้กับบอทหรือเพื่อน',
   rules: 'ขาวเดินก่อน แตะหมากของเราเพื่อดูช่องที่เดินได้ แล้วแตะช่องปลายทาง รองรับกติกาเต็ม: เข้าป้อม (castling), กินผ่าน (en passant) และเบี้ยเลื่อนขั้นเป็นฝ่าเสมอ ฝ่ายที่รุกจนอีกฝ่ายไม่มีทางหนีคือผู้ชนะ (รุกจน) ถ้าไม่มีตาเดินแต่ไม่ถูกรุกคือเสมอ (stalemate) บอทเล่นสีดำ',
   create(root, ctx) {
@@ -157,10 +158,13 @@ Games.push({
       }
       return best;
     }
+    // ง่าย: มองตาเดียวและสุ่มเยอะ ปกติ: มองล่วงหน้า 3 ตา ยาก: 4 ตา
+    const DEPTH = { easy: 0, normal: 2, hard: 3 }[ctx.level] ?? 2;
+    const NOISE = { easy: 250, normal: 6, hard: 2 }[ctx.level] ?? 6;
     function pickMove(s) {
       let best = null, bs = -Infinity;
       for (const m of ordered(s)) {
-        const v = -search(apply(s, m), 2, -Infinity, Infinity, 1) + Math.random() * 6;
+        const v = -search(apply(s, m), DEPTH, -Infinity, Infinity, 1) + Math.random() * NOISE;
         if (v > bs) { bs = v; best = m; }
       }
       return best;

@@ -12,7 +12,7 @@
   // เกมใหม่ต้องเพิ่มชื่อไฟล์ที่นี่ด้วย (ลำดับคือลำดับการ์ดในหน้าแรก) main.js ต้องอยู่ท้ายสุด
   const SCRIPTS = [
     'games/tictactoe.js', 'games/connect4.js', 'games/reversi.js', 'games/memory.js', 'games/snakes.js',
-    'games/chess.js', 'games/uno.js', 'games/werewolf.js', 'games/blocks.js', 'games/candy.js', 'games/wheel.js', 'main.js',
+    'games/chess.js', 'games/gomoku.js', 'games/mancala.js', 'games/uno.js', 'games/werewolf.js', 'games/blocks.js', 'games/candy.js', 'games/wheel.js', 'main.js',
   ];
   let mode = 'login', busy = false, loaded = false;
 

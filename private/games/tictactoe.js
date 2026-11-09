@@ -2,8 +2,9 @@ Games.push({
   id: 'ttt',
   name: 'OX',
   emoji: '⭕',
+  levels: true,
   desc: 'เกมคลาสสิก 3×3 ต่อให้ครบ 3 ช่อง',
-  rules: 'ผลัดกันวาง X และ O ใครต่อได้ 3 ช่องติดกัน (แนวตั้ง นอน หรือเฉียง) ก่อนชนะ บอทในโหมดนี้เก่งมาก ลองดูว่าจะเสมอได้ไหม',
+  rules: 'ผลัดกันวาง X และ O ใครต่อได้ 3 ช่องติดกัน (แนวตั้ง นอน หรือเฉียง) ก่อนชนะ บอทระดับยากไม่มีวันแพ้ ลองดูว่าจะเสมอได้ไหม',
   create(root, ctx) {
     const LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
     const bot = ctx.mode === 'bot';
@@ -32,7 +33,14 @@ Games.push({
       return p === 'O' ? Math.max(...vals) : Math.min(...vals);
     }
 
+    // โอกาสที่บอทจะเดินตาที่ดีที่สุด นอกนั้นเดินสุ่ม
+    const SMART = { easy: 0.3, normal: 0.75, hard: 1 }[ctx.level] ?? 1;
+
     function botMove() {
+      if (Math.random() >= SMART) {
+        const free = board.map((v, i) => (v ? -1 : i)).filter((i) => i >= 0);
+        return free[Math.floor(Math.random() * free.length)];
+      }
       let best = -2, picks = [];
       board.forEach((v, i) => {
         if (v) return;
